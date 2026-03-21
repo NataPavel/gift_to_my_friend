@@ -1,20 +1,25 @@
 export const bartenderDialogue = {
     beforeGame: [
-        "Hello, traveler!\nWhat would you like?",
-        "Information? What kind of information?",
-        "Oh, so if you want to find out\nabout Pavlo more, let's play a little game",
-        "We'll play the swords and shields\nRules are simple",
-        "1. You choose side of the coin\n2. I'll flip a coin",
-        "If you guessed the correct side - you win!",
-        "Choose your side:"
+        "О, прийшов!",
+        "Привіт, Дмитро!",
+        "З днем народження!",
+        "Бажаю тобі, щоб був здоровий!\n В твоєму віці це важливо!",
+        "Ще грошенят побільше і звісно ж удачі!",
+        "Дуже радий, що ти є!",
+        "Давай зіграємо в монетку",
+        "Правила тобі відомі",
+        "Якщо виграєш,\n то пиво в цьому закладі безкоштовно",
+        "І зможеш крутити слот скільки захочеш",
+        "Обирай сторону:"
     ],
     lose: [
-        "It's ok, we can try again",
-        "Choose your side:"
+        "Програв(",
+        "Але можеш спробувати ще раз",
+        "Обирай сторону:"
     ],
     win: [
-        "Wow! Your intuition is perfect!",
-        "Here, take this scroll",
-        "It contains all information about Pavlo"
+        "Вау! Вітаю з перемогою🎉",
+        "Тепер можеш пити пиво і гемблити, скільки заманеться",
+        "Ще раз вітаю з днем народження!"
     ]
 }

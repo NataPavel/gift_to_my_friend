@@ -18,7 +18,7 @@ export class TavernScene extends BaseScene {
     }
 
     protected initNPCs() {
-        this.testNPC = new BartenderNPC("Rayan Gosling", "none");
+        this.testNPC = new BartenderNPC("Бармен Бібоп", "none");
 
         this.testNPC.x = GameUtils.appWidth / 2;
         this.testNPC.y = this.testNPC.height + 10;

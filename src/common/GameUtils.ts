@@ -16,6 +16,7 @@ export class GameUtils{
 
     public static collibleObjectsList: Array<entityParameterType> = [];
     public static isCoinGameWon: boolean = false;
+    public static isCoinGameTriggered: boolean = false;
 
     // where obj - is anything besides player
     public static isInteraction(obj: entityParameterType, player: entityParameterType): boolean{
