@@ -12,7 +12,7 @@ export class BaseNPC extends Container{
 
     protected interactionKey: string = "KeyE";
     protected interactionKeyText = new Text({
-        text: 'Press E to interact',
+        text: 'Натисни E',
         alpha: 0
     });
     protected npcDefaultSpeech = new Text({

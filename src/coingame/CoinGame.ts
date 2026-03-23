@@ -10,7 +10,7 @@ export class CoinGame extends Container{
     public triggerCoinGame(coinSide: string){
         GameUtils.isCoinGameTriggered = true;
         
-        const flippedCoinResult = Math.floor(Math.random() * 2);
+        let flippedCoinResult = Math.floor(Math.random() * 2);
 
         if(this.isGameWon(this.sides[flippedCoinResult], coinSide)){
             // console.log("won");

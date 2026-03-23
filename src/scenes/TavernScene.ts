@@ -2,9 +2,11 @@ import { Container, EventEmitter, Graphics, Text } from "pixi.js";
 import { GameUtils } from "../common/GameUtils";
 import { BartenderNPC } from "../entities/npc/BartenderNPC";
 import { BaseScene } from "./BaseScene";
+import { SlotMachineEntity } from "../entities/npc/slotmachine/SlotMachineEntity";
 
 export class TavernScene extends BaseScene {
-    protected testNPC!: BartenderNPC;
+    protected bartenderNPC!: BartenderNPC;
+    protected slotMachine!: SlotMachineEntity;
 
     constructor(playerTexture: any, backgroundTexture: any) {
         super(playerTexture, backgroundTexture);
@@ -18,13 +20,20 @@ export class TavernScene extends BaseScene {
     }
 
     protected initNPCs() {
-        this.testNPC = new BartenderNPC("Бармен Бібоп", "none");
+        this.bartenderNPC = new BartenderNPC("Бармен Бібоп", "none");
+        this.slotMachine = new SlotMachineEntity("", "none");
 
-        this.testNPC.x = GameUtils.appWidth / 2;
-        this.testNPC.y = this.testNPC.height + 10;
-        this.addChild(this.testNPC);
+        this.bartenderNPC.x = GameUtils.appWidth / 2;
+        this.bartenderNPC.y = this.bartenderNPC.height + 10;
 
-        GameUtils.collibleObjectsList.push(this.testNPC.getNPCParameters());
+        this.slotMachine.x = 100;
+        this.slotMachine.y = this.bartenderNPC.height + 10;
+
+        this.addChild(this.bartenderNPC);
+        this.addChild(this.slotMachine);
+
+        GameUtils.collibleObjectsList.push(this.bartenderNPC.getNPCParameters());
+        GameUtils.collibleObjectsList.push(this.slotMachine.getNPCParameters());
     }
 
     protected setPlayerPosition() {
@@ -37,11 +46,17 @@ export class TavernScene extends BaseScene {
 
     public update(): void {
         super.update();
-        if (GameUtils.isInteraction(this.testNPC.getNPCParameters(), this._player.getPlayerParameters())) {
-            this.testNPC.showInteractionKey();
+        if (GameUtils.isInteraction(this.bartenderNPC.getNPCParameters(), this._player.getPlayerParameters())) {
+            this.bartenderNPC.showInteractionKey();
         } else {
-            this.testNPC.hideInteractionKey();
-            this.testNPC.destroySpeechText();
+            this.bartenderNPC.hideInteractionKey();
+            this.bartenderNPC.destroySpeechText();
+        }
+
+        if (GameUtils.isInteraction(this.slotMachine.getNPCParameters(), this._player.getPlayerParameters())) {
+            this.slotMachine.showInteractionKey();
+        } else {
+            this.slotMachine.hideInteractionKey();
         }
     }
 }

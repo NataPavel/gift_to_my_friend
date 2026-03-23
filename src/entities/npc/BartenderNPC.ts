@@ -99,7 +99,7 @@ export class BartenderNPC extends BaseNPC{
         });
 
         this.shieldSideButton.on("pointerdown", () => {
-            this.choosedSide = "shieldSideButton";
+            this.choosedSide = "shield";
             this.coinGame.triggerCoinGame(this.choosedSide);
             this.hideButtons();
             this.checkForGameResult();

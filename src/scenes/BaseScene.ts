@@ -18,11 +18,11 @@ export class BaseScene extends Container{
 
     protected init(){
         this._player = new Player(this._playerTexture);
-        let testSceneBG = new Graphics()
+        let baseSceneBG = new Graphics()
             .rect(0, 0, GameUtils.appWidth, GameUtils.appHeight)
             .fill(0xFF5B5B);
 
-        this.addChild(testSceneBG);
+        this.addChild(baseSceneBG);
         this.addChild(this._player);
     }
 
