@@ -57,6 +57,9 @@ export class TavernScene extends BaseScene {
             this.slotMachine.showInteractionKey();
         } else {
             this.slotMachine.hideInteractionKey();
+            if(GameUtils.isSlotTriggered){
+                this.slotMachine.hide();
+            }
         }
     }
 }

@@ -20,5 +20,17 @@ export class SlotMachineEntity extends BaseNPC{
             this.slotMachineScene = new SlotMachineScene();
             this.addChild(this.slotMachineScene);
         }
+
+        this.show();
+    }
+
+    public show(){
+        this.slotMachineScene.alpha = 1;
+        this.slotMachineScene.visible = true;
+    }
+
+    public hide(){
+        this.slotMachineScene.alpha = 0;
+        this.slotMachineScene.visible = false;
     }
 }
