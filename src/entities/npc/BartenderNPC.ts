@@ -5,15 +5,23 @@ import { CoinGame } from "../../coingame/CoinGame";
 import { GameUtils } from "../../common/GameUtils";
 
 export class BartenderNPC extends BaseNPC{
-    protected bartenderSpeech = new Text({text: ''});
+    protected bartenderSpeech = new Text({
+        text: '', 
+        style: {
+            fill: "#522dea",
+            stroke: {
+            width: 8,
+            color: "#000"
+        }}
+    });
 
     protected dialogueLineIndex: number = 0;
 
     protected swordSideButton = new Container;
     protected shieldSideButton = new Container;
 
-    protected swordSideText = new Text({text: 'Орел'});
-    protected shieldSideText = new Text({text: 'Решка'});
+    protected swordSideText = new Text({text: 'Орел', style:{fill: "#ffff"}});
+    protected shieldSideText = new Text({text: 'Решка', style:{fill: "#ffff"}});
 
     protected coinGame = new CoinGame();
     protected choosedSide: string = "";
@@ -137,11 +145,11 @@ export class BartenderNPC extends BaseNPC{
 
     protected initButtons(){
         const swordButtonBG = new Graphics()
-            .roundRect(0, 0, 80, 40, 12)
-            .fill(0x3a86ff);
+            .roundRect(0, 50, 80, 40, 2)
+            .fill("#929292");
         const shieldButtonBG = new Graphics()
-            .roundRect(0, 0, 80, 40, 12)
-            .fill(0x3a86ff);
+            .roundRect(0, 0, 80, 40, 2)
+            .fill("#929292");
 
         this.shieldSideButton.y = 100;
         this.swordSideButton.addChild(swordButtonBG);
@@ -164,6 +172,7 @@ export class BartenderNPC extends BaseNPC{
 
         this.swordSideText.alpha = 0;
         this.shieldSideText.alpha = 0;
+        this.swordSideText.y = 50;
     }
 
     protected destroyButtons(){

@@ -1,4 +1,4 @@
-import { Container, Graphics } from "pixi.js";
+import { Container, Graphics, Sprite } from "pixi.js";
 import { SlotMachineAction } from "./SlotMachineAction";
 import { GameUtils } from "../../../common/GameUtils";
 
@@ -11,27 +11,22 @@ export class SlotMachineScene extends Container{
 
     protected init(){
         GameUtils.isSlotTriggered = true;
-        let slotMachineBG = new Graphics()
-            .rect(40, -50, 1000, 500)
-            .fill('#D2C4B4');
+        let slotMachineBG = Sprite.from("slotmachine_bg");
+        slotMachineBG.x = -600;
+        slotMachineBG.y = -200;
         
         let slotMachineReelSetWindow = new Graphics()
-            .rect(290, 50, 500, 300)
-            .fill('#fff');
-        let slotMachineMaskTop = new Graphics()
-            .rect(40, -50, 1000, 100)
-            .fill('#ff22ff');
-        let slotMachineMaskBottom = new Graphics()
-            .rect(40, 350, 1000, 150)
-            .fill('#ff22ff');
+            .roundRect(48, 235, 250, 155)
+            .fill('#dcd5d5');
         
         this.addChild(slotMachineBG);
         slotMachineBG.addChild(slotMachineReelSetWindow);
 
         let testSymbol = new SlotMachineAction()
         testSymbol.init();
+        testSymbol.scale.set(0.5);
+        testSymbol.x -= 110;
+        testSymbol.y += 215;
         slotMachineReelSetWindow.addChild(testSymbol);
-        // slotMachineBG.addChild(slotMachineMaskTop);
-        // slotMachineBG.addChild(slotMachineMaskBottom);
     }
 }

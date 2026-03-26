@@ -13,10 +13,17 @@ export class BaseNPC extends Container{
     protected interactionKey: string = "KeyE";
     protected interactionKeyText = new Text({
         text: 'Натисни E',
-        alpha: 0
+        alpha: 0,
+        style: {
+        fill: "#1ce365", 
+        stroke: {
+            width: 8,
+            color: "#000"
+        }}
     });
     protected npcDefaultSpeech = new Text({
-        text: '...'
+        text: 'З днем народження!',
+        style: {fill: "#ffffff"}
     });
 
     constructor(npcName: string, npcTexture: string){
@@ -33,12 +40,16 @@ export class BaseNPC extends Container{
     protected init(){
         let testNPC = new Graphics().rect(0, 0, 50, 50).fill("254F22");
         this.addChild(testNPC);
+        testNPC.alpha = 0;
 
         const npcNameTextToDisplay = new Text({
-            text: this.npcName
+            text: this.npcName,
+            style: {fill: "#ffffff"}
         })
 
-        npcNameTextToDisplay.x -= 55;
+        npcNameTextToDisplay.alpha = 0;
+
+        npcNameTextToDisplay.x = 0;
         npcNameTextToDisplay.y -= 25;
 
         this.interactionKeyText.x -= 85;
@@ -74,7 +85,11 @@ export class BaseNPC extends Container{
         };
     }
 
-    public destroy() {}
+    public destroySpeechText(){
+        if(this.npcDefaultSpeech.parent){
+            this.removeChild(this.npcDefaultSpeech);
+        }
+    }
 
     public update(){
     }

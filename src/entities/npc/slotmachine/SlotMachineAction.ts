@@ -1,38 +1,39 @@
-import { Container, Graphics, Text } from "pixi.js";
+import { Container, Graphics, Sprite, Text } from "pixi.js";
 import { gsap } from "gsap";
 import { symbolsArray } from "./symbolsArray";
+import { AudioManager } from "../../../common/AudioManager";
 
 export class SlotMachineAction extends Container {
     // symbols' cell positions
     // create symbols row
-    protected symbol_c0 = new Text({ text: '' });
-    protected symbol_c1 = new Text({ text: '' });
-    protected symbol_c2 = new Text({ text: '' });
+    protected symbol_c0 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_c1 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_c2 = new Text({ text: '', style:{fontSize: 50 } });
 
     // first row
-    protected symbol_00 = new Text({ text: '' });
-    protected symbol_01 = new Text({ text: '' });
-    protected symbol_02 = new Text({ text: '' });
+    protected symbol_00 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_01 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_02 = new Text({ text: '', style:{fontSize: 50 } });
 
     // second row
-    protected symbol_10 = new Text({ text: '' });
-    protected symbol_11 = new Text({ text: '' });
-    protected symbol_12 = new Text({ text: '' });
+    protected symbol_10 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_11 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_12 = new Text({ text: '', style:{fontSize: 50 } });
 
     // third row
-    protected symbol_20 = new Text({ text: '' });
-    protected symbol_21 = new Text({ text: '' });
-    protected symbol_22 = new Text({ text: '' });
+    protected symbol_20 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_21 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_22 = new Text({ text: '', style:{fontSize: 50 } });
 
     // delete symbols row
-    protected symbol_d0 = new Text({ text: '' });
-    protected symbol_d1 = new Text({ text: '' });
-    protected symbol_d2 = new Text({ text: '' });
+    protected symbol_d0 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_d1 = new Text({ text: '', style:{fontSize: 50 } });
+    protected symbol_d2 = new Text({ text: '', style:{fontSize: 50 } });
 
     // column position (x)
     protected column_0 = 365;
-    protected column_1 = 530;
-    protected column_2 = 698;
+    protected column_1 = 540;
+    protected column_2 = 708;
 
     // row position (y)
     protected row_c = -15;
@@ -75,19 +76,11 @@ export class SlotMachineAction extends Container {
 
     protected initButton() {
         const buttonBg = new Graphics()
-            .rect(0, 0, 150, 50)
+            .rect(-200, -450, 800, 500)
             .fill("#ff22ff");
-
-        const buttonText = new Text({
-            text: "SPIN",
-            style: { fill: "#ffffff", fontSize: 20 }
-        });
-
-        buttonText.x = (150 - buttonText.width) / 2;
-        buttonText.y = (50 - buttonText.height) / 2;
+        buttonBg.alpha = 0;
 
         this.startButton.addChild(buttonBg);
-        this.startButton.addChild(buttonText);
 
         this.startButton.eventMode = 'static';
         this.startButton.cursor = 'pointer';
@@ -173,8 +166,14 @@ export class SlotMachineAction extends Container {
                 ease: "back.out(1.2)",
                 onComplete: () => {
                     if (colIndex === this.all_columns.length - 1 && index === sortedSymbols.length - 1) {
-                        if(this.isWin()) console.log("Winner");
-                        else console.log("Lose");
+                        if(this.isWin()){
+                            AudioManager.playGratSound("andrew"),
+                            AudioManager.playGratSound("pasha"),
+                            console.log("Winner");
+                        } 
+                        else {
+                            console.log("Lose");
+                        }
                         this.isSpining = false;
                     }
                 }

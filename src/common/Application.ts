@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js"
 import { BaseScene } from "../scenes/BaseScene";
 import { TavernScene } from "../scenes/TavernScene";
 import { GameUtils } from "./GameUtils";
+import { AudioManager } from "./AudioManager";
 
 export class Application{
     protected static app: PIXI.Application;
@@ -26,12 +27,15 @@ export class Application{
         document.body.appendChild(this.app.canvas);
         
         this.initGameUtils();
+        await this.loadAssets();
 
         this.changeForCurrentScene();
 
         this.app.ticker.add(() => {
             this._currentScene.update();
         });
+
+        AudioManager.init();
     }
 
     protected static changeForCurrentScene(sceneReplaceWith?: BaseScene){
@@ -48,7 +52,12 @@ export class Application{
         GameUtils.playerSizeHeight = 50;
     }
 
-    protected static setTextures(){
-        // here will be inserted textures
+    protected static async loadAssets(){
+        await PIXI.Assets.load([
+            {alias: "bg_texture", src: "assets/images/bg.webp"},
+            {alias: "slotmachine_bg", src: "assets/images/slotmachine_bg.webp"},
+            {alias: "confetti", src: "assets/images/confetti.gif"},
+            {alias: "plyer_texture", src: "assets/images/player.webp"}
+        ]);
     }
 }
