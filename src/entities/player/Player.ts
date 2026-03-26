@@ -19,6 +19,7 @@ export class Player extends Container {
     protected isUpKeyPressed: boolean = false;
 
     protected testPlayer: any;
+    protected texture: any;
 
     constructor(playerTexture: any) {
         super();
@@ -38,14 +39,14 @@ export class Player extends Container {
         // this.testPlayer = new Graphics()
         //     .rect(0, 0, this.playerSizeWidth, this.playerSizeHeight)
         //     .fill("09637e");
-        const texture = Assets.get("plyer_texture");
+        this.texture = Assets.get("player_up");
 
-        if (texture) {
-            let testPlayer = new Sprite(texture);
-            testPlayer.scale.set(0.4);
-            testPlayer.anchor.set(0.5);
+        if (this.texture) {
+            this.testPlayer = new Sprite(this.texture);
+            this.testPlayer.scale.set(0.4);
+            this.testPlayer.anchor.set(0.5);
 
-            this.addChild(testPlayer);
+            this.addChild(this.testPlayer);
             console.log("BG added successfully");
         } else {
             console.error(`Texture 'player' not found! Check if loadAssets finished.`);
@@ -78,6 +79,7 @@ export class Player extends Container {
 
     public update() {
         if (this.isLeftKeyPressed) {
+            this.testPlayer.texture = Assets.get("player_left");
             let nextX = this.x - this.playerSpeed;
 
             if (nextX >= 0 && this.canPlayerMoveByX(nextX)) {
@@ -85,6 +87,7 @@ export class Player extends Container {
             }
         }
         if (this.isRightKeyPressed) {
+            this.testPlayer.texture = Assets.get("player_right");
             let nextX = this.x + this.playerSpeed;
 
             if (nextX <= GameUtils.appWidth - this.playerSizeWidth
@@ -93,6 +96,7 @@ export class Player extends Container {
             }
         }
         if (this.isUpKeyPressed) {
+            this.testPlayer.texture = Assets.get("player_up");
             let nextY = this.y - this.playerSpeed;
 
             if (nextY >= 0 && this.canPlayerMoveByY(nextY)) {
@@ -100,6 +104,7 @@ export class Player extends Container {
             }
         }
         if (this.isDownKeyPressed) {
+            this.testPlayer.texture = Assets.get("player_down");
             let nextY = this.y + this.playerSpeed;
 
             if (nextY <= GameUtils.appHeight - this.playerSizeHeight

@@ -13,6 +13,7 @@ export class TavernScene extends BaseScene {
     protected pasha!: Pasha;
     protected slotMachine!: SlotMachineEntity;
     protected justNPC!: BaseNPC;
+    protected allNPC: Set<any> = new Set();
 
     constructor(playerTexture: any, backgroundTexture: any) {
         super(playerTexture, backgroundTexture);
@@ -96,32 +97,20 @@ export class TavernScene extends BaseScene {
 
     public update(): void {
         super.update();
-        if (GameUtils.isInteraction(this.bartenderNPC.getNPCParameters(), this._player.getPlayerParameters())) {
-            this.bartenderNPC.showInteractionKey();
-        } else {
-            this.bartenderNPC.hideInteractionKey();
-            this.bartenderNPC.destroySpeechText();
-        }
-        if (GameUtils.isInteraction(this.justNPC.getNPCParameters(), this._player.getPlayerParameters())) {
-            this.justNPC.showInteractionKey();
-        } else {
-            this.justNPC.hideInteractionKey();
-            this.justNPC.destroySpeechText();
-        }
 
-        if (GameUtils.isInteraction(this.andrew.getNPCParameters(), this._player.getPlayerParameters())) {
-            this.andrew.showInteractionKey();
-        } else {
-            this.andrew.hideInteractionKey();
-            this.andrew.destroySpeechText();
-        }
+        if(!this.allNPC.has(this.bartenderNPC)) this.allNPC.add(this.bartenderNPC);
+        if(!this.allNPC.has(this.andrew)) this.allNPC.add(this.andrew);
+        if(!this.allNPC.has(this.pasha)) this.allNPC.add(this.pasha);
+        if(!this.allNPC.has(this.justNPC)) this.allNPC.add(this.justNPC);
 
-        if (GameUtils.isInteraction(this.pasha.getNPCParameters(), this._player.getPlayerParameters())) {
-            this.pasha.showInteractionKey();
-        } else {
-            this.pasha.hideInteractionKey();
-            this.pasha.destroySpeechText();
-        }
+        this.allNPC.forEach((element) => {
+            if (GameUtils.isInteraction(element.getNPCParameters(), this._player.getPlayerParameters())) {
+                element.showInteractionKey();
+            } else {
+                element.hideInteractionKey();
+                element.destroySpeechText();
+            }
+        });
 
         if (GameUtils.isInteraction(this.slotMachine.getNPCParameters(), this._player.getPlayerParameters())) {
             this.slotMachine.showInteractionKey();

@@ -2,6 +2,7 @@ import { Container, Graphics, Sprite, Text } from "pixi.js";
 import { gsap } from "gsap";
 import { symbolsArray } from "./symbolsArray";
 import { AudioManager } from "../../../common/AudioManager";
+import { GameUtils } from "../../../common/GameUtils";
 
 export class SlotMachineAction extends Container {
     // symbols' cell positions
@@ -85,7 +86,28 @@ export class SlotMachineAction extends Container {
         this.startButton.eventMode = 'static';
         this.startButton.cursor = 'pointer';
         this.startButton.on('pointerdown', () => {
-          if(!this.isSpining) this.triggerSpin();
+          if(!GameUtils.isCoinGameWon){
+             const warningText = new Text({
+                text: "Ти повинен перемогти бармена а монетку",
+                style: {
+                    fill: "#ff0000",
+                    stroke: {
+                        width: 8,
+                        color: "#000"
+                    },
+                    fontSize: 50
+                }
+             });
+             warningText.x = 100;
+             warningText.y = 100;
+
+             this.addChild(warningText);
+             gsap.delayedCall(3, () => {
+                this.removeChild(warningText);
+             });
+          } else {
+            if(!this.isSpining) this.triggerSpin();
+          }
         });
 
         this.startButton.x = 450;
