@@ -2,17 +2,26 @@ import { Container, Graphics, Text } from "pixi.js";
 import { BaseNPC } from "./BaseNPC";
 import { bartenderDialogue } from "./dialogs/bartenderDialog";
 import { CoinGame } from "../../coingame/CoinGame";
+import { GameUtils } from "../../common/GameUtils";
 
 export class BartenderNPC extends BaseNPC{
-    protected bartenderSpeech = new Text({text: ''});
+    protected bartenderSpeech = new Text({
+        text: '', 
+        style: {
+            fill: "#522dea",
+            stroke: {
+            width: 8,
+            color: "#000"
+        }}
+    });
 
     protected dialogueLineIndex: number = 0;
 
     protected swordSideButton = new Container;
     protected shieldSideButton = new Container;
 
-    protected swordSideText = new Text({text: 'Sword'});
-    protected shieldSideText = new Text({text: 'Shield'});
+    protected swordSideText = new Text({text: 'Орел', style:{fill: "#ffff"}});
+    protected shieldSideText = new Text({text: 'Решка', style:{fill: "#ffff"}});
 
     protected coinGame = new CoinGame();
     protected choosedSide: string = "";
@@ -37,6 +46,18 @@ export class BartenderNPC extends BaseNPC{
             this.addChild(this.bartenderSpeech);
         }
 
+        if(!GameUtils.isCoinGameTriggered){
+            this.dialogBeforeGame();
+        }
+
+        if(GameUtils.isCoinGameTriggered && !GameUtils.isCoinGameWon){
+            this.loseGameDialogue();
+        } else if(GameUtils.isCoinGameWon){
+            this.winGameDialogue();
+        }
+    }
+
+    protected dialogBeforeGame(){
         if(bartenderDialogue.beforeGame[this.dialogueLineIndex] === 
             bartenderDialogue.beforeGame[bartenderDialogue.beforeGame.length - 1]
         ){
@@ -47,7 +68,32 @@ export class BartenderNPC extends BaseNPC{
             this.bartenderSpeech.text = bartenderDialogue.beforeGame[this.dialogueLineIndex]
             this.dialogueLineIndex += 1;
         }
-    
+    }
+
+    protected loseGameDialogue() {
+        if (bartenderDialogue.lose[this.dialogueLineIndex] ===
+            bartenderDialogue.lose[bartenderDialogue.lose.length - 1]
+        ) {
+            this.chooseCoinSide();
+        }
+
+        if (bartenderDialogue.lose[this.dialogueLineIndex]) {
+            this.bartenderSpeech.text = bartenderDialogue.lose[this.dialogueLineIndex]
+            this.dialogueLineIndex += 1;
+        }
+    }
+
+    protected winGameDialogue(){
+        if (bartenderDialogue.win[this.dialogueLineIndex] ===
+            bartenderDialogue.win[bartenderDialogue.win.length - 1]
+        ) {
+            
+        }
+
+        if (bartenderDialogue.win[this.dialogueLineIndex]) {
+            this.bartenderSpeech.text = bartenderDialogue.win[this.dialogueLineIndex]
+            this.dialogueLineIndex += 1;
+        }
     }
 
     protected chooseCoinSide(){
@@ -56,14 +102,29 @@ export class BartenderNPC extends BaseNPC{
         this.swordSideButton.on("pointerdown", () => {
             this.choosedSide = "sword";
             this.coinGame.triggerCoinGame(this.choosedSide);
-            this.destroyButtons();
+            this.hideButtons();
+            this.checkForGameResult();
         });
 
         this.shieldSideButton.on("pointerdown", () => {
-            this.choosedSide = "shieldSideButton";
+            this.choosedSide = "shield";
             this.coinGame.triggerCoinGame(this.choosedSide);
-            this.destroyButtons();
+            this.hideButtons();
+            this.checkForGameResult();
         });
+    }
+
+    protected checkForGameResult() {
+        this.bartenderSpeech.text = "";
+        this.dialogueLineIndex = 0;
+
+        if (GameUtils.isCoinGameWon) {
+            console.log("bartender said: won!");
+            this.winGameDialogue();
+        } else {
+            console.log("bartender said: lose!");
+            this.loseGameDialogue();
+        }
     }
 
     protected showButtons(){
@@ -74,13 +135,21 @@ export class BartenderNPC extends BaseNPC{
         this.shieldSideText.alpha = 1;
     }
 
+    protected hideButtons(){
+        this.swordSideButton.alpha = 0;
+        this.shieldSideButton.alpha = 0;
+
+        this.swordSideText.alpha = 0;
+        this.shieldSideText.alpha = 0;
+    }
+
     protected initButtons(){
         const swordButtonBG = new Graphics()
-            .roundRect(0, 0, 80, 40, 12)
-            .fill(0x3a86ff);
+            .roundRect(0, 50, 80, 40, 2)
+            .fill("#929292");
         const shieldButtonBG = new Graphics()
-            .roundRect(0, 0, 80, 40, 12)
-            .fill(0x3a86ff);
+            .roundRect(0, 0, 80, 40, 2)
+            .fill("#929292");
 
         this.shieldSideButton.y = 100;
         this.swordSideButton.addChild(swordButtonBG);
@@ -103,6 +172,7 @@ export class BartenderNPC extends BaseNPC{
 
         this.swordSideText.alpha = 0;
         this.shieldSideText.alpha = 0;
+        this.swordSideText.y = 50;
     }
 
     protected destroyButtons(){
@@ -118,7 +188,7 @@ export class BartenderNPC extends BaseNPC{
     public destroySpeechText(){
         if(this.bartenderSpeech.parent){
             this.removeChild(this.bartenderSpeech);
-            this.dialogueLineIndex = 0;
+            this.dialogueLineIndex = 0
         }
     }
 }

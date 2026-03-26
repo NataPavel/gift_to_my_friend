@@ -1,4 +1,4 @@
-import { Container, Graphics } from "pixi.js";
+import { Assets, Container, Graphics, Sprite } from "pixi.js";
 import { GameUtils } from "../../common/GameUtils";
 import { entityParameterType } from "../types/EntityParametersType";
 
@@ -35,11 +35,21 @@ export class Player extends Container {
         this.playerSizeWidth = GameUtils.playerSizeWidth;
         this.playerSizeHeight = GameUtils.playerSizeHeight;
 
-        this.testPlayer = new Graphics()
-            .rect(0, 0, this.playerSizeWidth, this.playerSizeHeight)
-            .fill("09637e");
+        // this.testPlayer = new Graphics()
+        //     .rect(0, 0, this.playerSizeWidth, this.playerSizeHeight)
+        //     .fill("09637e");
+        const texture = Assets.get("plyer_texture");
 
-        this.addChild(this.testPlayer);
+        if (texture) {
+            let testPlayer = new Sprite(texture);
+            testPlayer.scale.set(0.4);
+            testPlayer.anchor.set(0.5);
+
+            this.addChild(testPlayer);
+            console.log("BG added successfully");
+        } else {
+            console.error(`Texture 'player' not found! Check if loadAssets finished.`);
+        }
     }
 
     protected onKeyDown(event: any) {

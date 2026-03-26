@@ -1,4 +1,5 @@
 import { Container, DestroyOptions } from "pixi.js";
+import { GameUtils } from "../common/GameUtils";
 
 export class CoinGame extends Container{
     protected sides = ["sword", "shield"];
@@ -7,13 +8,18 @@ export class CoinGame extends Container{
     }
 
     public triggerCoinGame(coinSide: string){
-        const flippedCoinResult = Math.floor(Math.random() * 2);
+        GameUtils.isCoinGameTriggered = true;
+        
+        let flippedCoinResult = Math.floor(Math.random() * 2);
 
-        if(this.sides[flippedCoinResult] === coinSide){
-            console.log("Win")
-        } else{
-            console.log("Lose");
+        if(this.isGameWon(this.sides[flippedCoinResult], coinSide)){
+            // console.log("won");
+            GameUtils.isCoinGameWon = true;
         }
+    }
+
+    protected isGameWon(result: string, coinSide: string): boolean{
+        return result === coinSide ? true : false;
     }
 
     public destroy(){
