@@ -57,7 +57,10 @@ export class Application{
             {alias: "bg_texture", src: "assets/images/bg.webp"},
             {alias: "slotmachine_bg", src: "assets/images/slotmachine_bg.webp"},
             {alias: "confetti", src: "assets/images/confetti.gif"},
-            {alias: "plyer_texture", src: "assets/images/player.webp"}
+            {alias: "player_up", src: "assets/images/player_up.webp"},
+            {alias: "player_down", src: "assets/images/player_down.webp"},
+            {alias: "player_left", src: "assets/images/player_left.webp"},
+            {alias: "player_right", src: "assets/images/player_right.webp"}
         ]);
     }
 }
